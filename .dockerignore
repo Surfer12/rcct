@@ -1,0 +1,38 @@
+# Gradle files
+.gradle/
+build/
+*/build/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.vscode/
+
+# Logs
+*.log
+logs/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Docker specific files (to prevent recursive copying)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Other files
+*.class
+*.war
+*.jar
+*.ear
+out/
+bin/
+tmp/
+.git/
+.github/

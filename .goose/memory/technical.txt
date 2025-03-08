@@ -34,3 +34,29 @@ Project structure:
   - App.css (Styling)
   - index.tsx (Entry point)
 
+# docker deployment configuration
+Docker deployment for RCCT application includes:
+
+1. Spring Boot Backend Dockerfile:
+   - Multi-stage build with Gradle build stage and JRE runtime stage
+   - Uses JDK 21 for compilation and JRE 21 for runtime
+   - Exposes port 8080 for the API
+   - Includes Spring Boot Actuator for health checks
+
+2. React Frontend Dockerfile:
+   - Multi-stage build with Node build stage and Nginx runtime stage
+   - Uses Node 18 for building the React application
+   - Uses Nginx as a production web server
+   - Custom Nginx configuration for SPA routing and API proxying
+   - Exposes port 80 for web access
+
+3. Docker Compose configuration:
+   - Coordinates both services in a single deployment
+   - Sets up a bridge network between frontend and backend
+   - Configures environment variables for Docker-specific settings
+   - Includes health checks for the backend service
+
+4. CORS and proxy configuration to allow secure communication between services
+
+The system is designed for easy deployment with a single "docker-compose up" command.
+
