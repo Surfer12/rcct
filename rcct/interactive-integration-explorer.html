@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cross-Domain Integration Explorer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #343a40;
+      margin-bottom: 30px;
+    }
+    
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .visualization {
+      width: 70%;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .info-panel {
+      width: 30%;
+      padding: 20px;
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      margin-left: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      max-height: 600px;
+      overflow-y: auto;
+    }
+    
+    .info-section {
+      margin-bottom: 20px;
+    }
+    
+    .info-section h3 {
+      color: #343a40;
+      border-bottom: 2px solid #dee2e6;
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+    
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    
+    .tag {
+      background: #e9ecef;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 14px;
+      color: #495057;
+    }
+    
+    #tooltip {
+      position: absolute;
+      display: none;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      border-radius: 4px;
+      font-size: 14px;
+      max-width: 250px;
+      z-index: 100;
+      pointer-events: none;
+    }
+    
+    /* Domain styles */
+    .computational {
+      color: #4dabf7;
+    }
+    
+    .cognitive {
+      color: #20c997;
+    }
+    
+    .representational {
+      color: #e83e8c;
+    }
+    
+    .integration {
+      color: #fd7e14;
+    }
+    
+    .isomorphism {
+      color: #6610f2;
+    }
+    
+    /* Specific domain background styles */
+    .bg-computational {
+      background-color: #4dabf720;
+    }
+    
+    .bg-cognitive {
+      background-color: #20c99720;
+    }
+    
+    .bg-representational {
+      background-color: #e83e8c20;
+    }
+    
+    .implementation-timeline {
+      margin-top: 30px;
+      padding: 20px;
+      background: white;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .timeline {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      position: relative;
+    }
+    
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #dee2e6;
+      z-index: 0;
+    }
+    
+    .timeline-marker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      width: 18%;
+    }
+    
+    .marker-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .marker-dot:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    
+    .marker-label {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .marker-description {
+      display: none;
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 13px;
+      text-align: center;
+    }
+    
+    /* Interactive elements */
+    .svg-interactive {
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    
+    .svg-interactive:hover {
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cross-Domain Integration Explorer</h1>
+  
+  <div class="container">
+    <div class="visualization">
+      <!-- Tooltip that will follow cursor -->
+      <div id="tooltip"></div>
+      
+      <!-- SVG Visualization -->
+      <svg id="integration-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="100%">
+        <!-- Background with subtle grid -->
+        <rect width="900" height="700" fill="#f8f9fa" />
+        <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+          <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#e9ecef" stroke-width="0.5"/>
+        </pattern>
+        <rect width="900" height="700" fill="url(#smallGrid)" />
+        
+        <text x="450" y="35" font-family="Arial" font-size="24" text-anchor="middle" fill="#343a40" font-weight="bold">Cross-Domain Integration: Cognitive-Computational-Representational Isomorphisms</text>
+        
+        <!-- Three Domain Circles - Venn Diagram -->
+        <!-- Computational Domain -->
+        <circle id="computational-domain" class="svg-interactive" cx="380" cy="300" r="200" fill="#4dabf733" stroke="#4dabf7" stroke-width="2" data-info="Computational Domain: Algorithms and data structures that process information through code." />
+        <text x="380" y="160" font-family="Arial" font-size="20" text-anchor="middle" fill="#343a40" font-weight="bold">Computational Domain</text>
+        
+        <!-- Cognitive Domain -->
+        <circle id="cognitive-domain" class="svg-interactive" cx="520" cy="300" r="200" fill="#20c99733" stroke="#20c997" stroke-width="2" data-info="Cognitive Domain: Neural processes and cognitive structures that underlie thinking, learning, and memory." />
+        <text x="520" y="160" font-family="Arial" font-size="20" text-anchor="middle" fill="#343a40" font-weight="bold">Cognitive Domain</text>
+        
+        <!-- Representational Domain -->
+        <circle id="representational-domain" class="svg-interactive" cx="450" cy="440" r="200" fill="#e83e8c33" stroke="#e83e8c" stroke-width="2" data-info="Representational Domain: Symbolic systems like YAML that encode knowledge and concepts using structured notations." />
+        <text x="450" y="620" font-family="Arial" font-size="20" text-anchor="middle" fill="#343a40" font-weight="bold">Representational Domain</text>
+        
+        <!-- Domain-Specific Elements -->
+        
+        <!-- Computational Elements -->
+        <g transform="translate(250, 250)">
+          <!-- Code Structure -->
+          <rect x="0" y="0" width="120" height="120" rx="10" ry="10" fill="#4dabf720" stroke="#4dabf7" stroke-width="2" />
+          <text x="60" y="-10" font-family="Arial" font-size="14" text-anchor="middle" fill="#4dabf7" font-weight="bold">Mojo Structures</text>
+          
+          <!-- Recursive Function -->
+          <rect id="thoughtnode" class="svg-interactive" x="20" y="20" width="80" height="30" rx="5" ry="5" fill="white" stroke="#4dabf7" stroke-width="1" data-info="ThoughtNode: A self-referential data structure that can link to other nodes, enabling hierarchical cognitive representation." />
+          <text x="60" y="40" font-family="Courier New" font-size="12" text-anchor="middle" fill="#4dabf7">ThoughtNode</text>
+          
+          <!-- Cache -->
+          <rect id="memocache" class="svg-interactive" x="20" y="60" width="80" height="30" rx="5" ry="5" fill="white" stroke="#4dabf7" stroke-width="1" data-info="memoCache: A computational optimization that stores previously computed results, mirroring cognitive chunking and pattern recognition." />
+          <text x="60" y="80" font-family="Courier New" font-size="12" text-anchor="middle" fill="#4dabf7">memoCache</text>
+          
+          <!-- Arrow to itself (recursion) -->
+          <path d="M 100 20 C 120 10 130 40 100 45" stroke="#4dabf7" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" />
+        </g>
+        
+        <!-- Cognitive Elements -->
+        <g transform="translate(550, 250)">
+          <!-- Brain Structure -->
+          <ellipse cx="50" cy="60" rx="70" ry="60" fill="#20c99720" stroke="#20c997" stroke-width="2" />
+          <text x="50" y="-10" font-family="Arial" font-size="14" text-anchor="middle" fill="#20c997" font-weight="bold">Neural Processes</text>
+          
+          <!-- Working Memory -->
+          <ellipse id="working-memory" class="svg-interactive" cx="30" cy="40" rx="25" ry="20" fill="white" stroke="#20c997" stroke-width="1" data-info="Working Memory: Temporary storage system that holds information needed for complex cognitive tasks like reasoning and comprehension." />
+          <text x="30" y="44" font-family="Arial" font-size="10" text-anchor="middle" fill="#20c997">Working Memory</text>
+          
+          <!-- Long-term Memory -->
+          <ellipse id="longterm-memory" class="svg-interactive" cx="70" cy="75" rx="25" ry="20" fill="white" stroke="#20c997" stroke-width="1" data-info="Long-term Memory: Persistent storage of information through structural changes in neural networks, enabling knowledge retrieval over time." />
+          <text x="70" y="79" font-family="Arial" font-size="10" text-anchor="middle" fill="#20c997">Long-term Memory</text>
+          
+          <!-- Recursive Thought -->
+          <path id="metacognition" class="svg-interactive" d="M 55 40 C 90 30 95 60 60 75" stroke="#20c997" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" data-info="Meta-cognition: The mind's ability to reflect on its own processes, enabling self-monitoring and regulation of cognitive activities." />
+          <text x="90" y="55" font-family="Arial" font-size="10" text-anchor="middle" fill="#20c997">Meta-cognition</text>
+        </g>
+        
+        <!-- Representational Elements -->
+        <g transform="translate(420, 450)">
+          <!-- YAML Document -->
+          <rect x="-60" y="-20" width="120" height="120" rx="5" ry="5" fill="#e83e8c20" stroke="#e83e8c" stroke-width="2" />
+          <text x="0" y="-30" font-family="Arial" font-size="14" text-anchor="middle" fill="#e83e8c" font-weight="bold">YAML Structures</text>
+          
+          <!-- Anchors -->
+          <rect id="anchor" class="svg-interactive" x="-40" y="10" width="80" height="25" rx="5" ry="5" fill="white" stroke="#e83e8c" stroke-width="1" data-info="&amp;anchor: YAML's mechanism for declaring reusable content blocks, similar to naming a cognitive concept for future reference." />
+          <text x="0" y="27" font-family="Courier New" font-size="12" text-anchor="middle" fill="#e83e8c">&amp;anchor</text>
+          
+          <!-- References -->
+          <rect id="reference" class="svg-interactive" x="-40" y="45" width="80" height="25" rx="5" ry="5" fill="white" stroke="#e83e8c" stroke-width="1" data-info="*reference: YAML's method for reusing defined content, analogous to cognitive recall of established concepts." />
+          <text x="0" y="62" font-family="Courier New" font-size="12" text-anchor="middle" fill="#e83e8c">*reference</text>
+          
+          <!-- Recursive Structure -->
+          <path d="M 40 20 C 60 30 60 60 40 70" stroke="#e83e8c" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" />
+        </g>
+        
+        <!-- Integration Points - Central Area -->
+        <circle id="integration-center" class="svg-interactive" cx="450" cy="350" r="100" fill="#ffc10740" stroke="#ffc107" stroke-width="3" stroke-dasharray="5,5" data-info="Integration Zone: The conceptual space where computational, cognitive, and representational structures converge through isomorphic relationships." />
+        <text x="450" y="320" font-family="Arial" font-size="18" text-anchor="middle" fill="#343a40" font-weight="bold">Integration</text>
+        <text x="450" y="345" font-family="Arial" font-size="16" text-anchor="middle" fill="#343a40">Isomorphic</text>
+        <text x="450" y="365" font-family="Arial" font-size="16" text-anchor="middle" fill="#343a40">Structures</text>
+        
+        <!-- Cross-Domain Isomorphisms -->
+        <!-- Computational to Cognitive -->
+        <line id="memory-cache" class="svg-interactive" x1="350" y1="275" x2="400" y2="320" stroke="#6610f2" stroke-width="2" stroke-dasharray="5,3" data-info="Memory-Cache Isomorphism: Parallel between cognitive memory structures and computational caching mechanisms, both optimizing information retrieval." />
+        <text x="360" y="290" font-family="Arial" font-size="12" text-anchor="middle" fill="#6610f2" transform="rotate(-30 360 290)">Memory ↔ Cache</text>
+        
+        <!-- Computational to Representational -->
+        <line id="pointer-reference" class="svg-interactive" x1="350" y1="340" x2="400" y2="370" stroke="#6610f2" stroke-width="2" stroke-dasharray="5,3" data-info="Pointer-Reference Isomorphism: Parallel between computational pointers and symbolic references, both enabling efficient directed relationships between entities." />
+        <text x="360" y="365" font-family="Arial" font-size="12" text-anchor="middle" fill="#6610f2" transform="rotate(30 360 365)">Pointer ↔ Reference</text>
+        
+        <!-- Cognitive to Representational -->
+        <line id="chunking-anchors" class="svg-interactive" x1="500" y1="390" x2="550" y2="340" stroke="#6610f2" stroke-width="2" stroke-dasharray="5,3" data-info="Chunking-Anchors Isomorphism: Parallel between cognitive chunking of information and representational anchoring of reusable content blocks." />
+        <text x="540" y="375" font-family="Arial" font-size="12" text-anchor="middle" fill="#6610f2" transform="rotate(-30 540 375)">Chunking ↔ Anchors</text>
+        
+        <!-- Future Integration Potentials -->
+        <!-- Markers for Potential Integration Points -->
+        <!-- Computational-Cognitive Integration -->
+        <circle id="point-a" class="svg-interactive" cx="450" cy="245" r="15" fill="white" stroke="#fd7e14" stroke-width="2" data-info="Neural-Inspired Algorithms: Integration of cognitive neural patterns with computational algorithms to create more brain-like processing systems." />
+        <text x="450" y="250" font-family="Arial" font-size="20" text-anchor="middle" fill="#fd7e14" font-weight="bold">A</text>
+        
+        <!-- Computational-Representational Integration -->
+        <circle id="point-b" class="svg-interactive" cx="380" cy="400" r="15" fill="white" stroke="#fd7e14" stroke-width="2" data-info="Executable Knowledge Graphs: Integration of computational structures with knowledge representation to create dynamically executable concept networks." />
+        <text x="380" y="405" font-family="Arial" font-size="20" text-anchor="middle" fill="#fd7e14" font-weight="bold">B</text>
+        
+        <!-- Cognitive-Representational Integration -->
+        <circle id="point-c" class="svg-interactive" cx="520" cy="400" r="15" fill="white" stroke="#fd7e14" stroke-width="2" data-info="Cognitive YAML Processing: Integration of cognitive chunking principles with YAML-like representations to create more natural knowledge organization systems." />
+        <text x="520" y="405" font-family="Arial" font-size="20" text-anchor="middle" fill="#fd7e14" font-weight="bold">C</text>
+        
+        <!-- Full Three-Domain Integration -->
+        <circle id="point-d" class="svg-interactive" cx="450" cy="350" r="25" fill="white" stroke="#fd7e14" stroke-width="3" data-info="Recursive Meta-Cognitive CCT: Complete integration of all three domains, enabling systems that reason about their own reasoning processes across multiple representational layers." />
+        <text x="450" y="358" font-family="Arial" font-size="26" text-anchor="middle" fill="#fd7e14" font-weight="bold">D</text>
+        
+        <!-- Legend for Integration Points -->
+        <rect x="650" y="320" width="220" height="140" rx="10" ry="10" fill="white" stroke="#343a40" stroke-width="1" />
+        <text x="760" y="345" font-family="Arial" font-size="16" text-anchor="middle" fill="#343a40" font-weight="bold">Integration Potentials</text>
+        
+        <circle cx="670" cy="370" r="10" fill="white" stroke="#fd7e14" stroke-width="2" />
+        <text x="670" y="374" font-family="Arial" font-size="14" text-anchor="middle" fill="#fd7e14" font-weight="bold">A</text>
+        <text x="790" y="374" font-family="Arial" font-size="12" text-anchor="middle" fill="#343a40">Neural-Inspired Algorithms</text>
+        
+        <circle cx="670" cy="395" r="10" fill="white" stroke="#fd7e14" stroke-width="2" />
+        <text x="670" y="399" font-family="Arial" font-size="14" text-anchor="middle" fill="#fd7e14" font-weight="bold">B</text>
+        <text x="790" y="399" font-family="Arial" font-size="12" text-anchor="middle" fill="#343a40">Executable Knowledge Graphs</text>
+        
+        <circle cx="670" cy="420" r="10" fill="white" stroke="#fd7e14" stroke-width="2" />
+        <text x="670" y="424" font-family="Arial" font-size="14" text-anchor="middle" fill="#fd7e14" font-weight="bold">C</text>
+        <text x="790" y="424" font-family="Arial" font-size="12" text-anchor="middle" fill="#343a40">Cognitive YAML Processing</text>
+        
+        <circle cx="670" cy="445" r="15" fill="white" stroke="#fd7e14" stroke-width="2" />
+        <text x="670" y="450" font-family="Arial" font-size="18" text-anchor="middle" fill="#fd7e14" font-weight="bold">D</text>
+        <text x="790" y="450" font-family="Arial" font-size="12" text-anchor="middle" fill="#343a40">Recursive Meta-Cognitive CCT</text>
+        
+        <!-- Meta-Layer -->
+        <rect x="100" y="70" width="220" height="120" rx="10" ry="10" fill="white" stroke="#343a40" stroke-width="1" />
+        <text x="210" y="95" font-family="Arial" font-size="16" text-anchor="middle" fill="#343a40" font-weight="bold">Structural Isomorphisms</text>
+        
+        <line x1="120" y1="115" x2="300" y2="115" stroke="#343a40" stroke-width="1" />
+        <text id="recursive-iso" class="svg-interactive" x="140" y="135" font-family="Arial" font-size="12" text-anchor="left" fill="#6610f2" data-info="Recursive Self-Reference: The ability of a structure to reference itself, enabling loops of increasingly abstract meta-processing.">• Recursive Self-Reference</text>
+        <text id="compression-iso" class="svg-interactive" x="140" y="155" font-family="Arial" font-size="12" text-anchor="left" fill="#6610f2" data-info="Compression/Chunking: The capacity to identify and consolidate repeating patterns, improving processing efficiency and concept organization.">• Compression/Chunking</text>
+        <text id="meta-iso" class="svg-interactive" x="140" y="175" font-family="Arial" font-size="12" text-anchor="left" fill="#6610f2" data-info="Meta-Observational Capacity: The ability to observe and analyze one's own processes, enabling higher-order thinking and self-improvement.">• Meta-Observational Capacity</text>
+        
+        <!-- Arrow Marker Definition -->
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#343a40" />
+          </marker>
+        </defs>
+        
+        <!-- Meta-Cognitive Observation Loop -->
+        <path id="meta-loop" class="svg-interactive" d="M 450 100 C 700 100 700 600 450 600 C 200 600 200 100 450 100" stroke="#6f42c1" stroke-width="2" fill="none" stroke-dasharray="10,5" data-info="Meta-Cognitive Observation Loop: The overarching process by which the entire system observes itself, enabling continuous refinement and optimization of cross-domain integration." />
+        <text x="750" y="190" font-family="Arial" font-size="16" text-anchor="middle" fill="#6f42c1" font-weight="bold">Meta-Cognitive</text>
+        <text x="750" y="210" font-family="Arial" font-size="16" text-anchor="middle" fill="#6f42c1" font-weight="bold">Observation Loop</text>
+        <path d="M 730 220 L 680 260" stroke="#6f42c1" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+      </svg>
+    </div>
+    
+    <div class="info-panel">
+      <div id="default-info">
+        <div class="info-section">
+          <h3>Cross-Domain Integration</h3>
+          <p>This visualization maps the structural isomorphisms between computational, cognitive, and representational domains, highlighting integration potentials for advanced recursive systems.</p>
+          <p>Hover over or click elements to explore specific concepts and their cross-domain relationships.</p>
+        </div>
+        
+        <div class="info-section">
+          <h3>Core Isomorphisms</h3>
+          <ul>
+            <li><span class="isomorphism">Recursive Self-Reference</span> - Self-modifying structures across all domains</li>
+            <li><span class="isomorphism">Compression/Chunking</span> - Pattern recognition and optimization</li>
+            <li><span class="isomorphism">Meta-Observational Capacity</span> - Systems that can observe and modify themselves</li>
+          </ul>
+        </div>
+        
+        <div class="info-section">
+          <h3>Primary Integration Points</h3>
+          <p><span class="integration">A: Neural-Inspired Algorithms</span> - Computations that mirror cognitive processes</p>
+          <p><span class="integration">B: Executable Knowledge Graphs</span> - Data structures that blend code and representation</p>
+          <p><span class="integration">C: Cognitive YAML Processing</span> - Representational systems with cognitive chunking</p>
+          <p><span class="integration">D: Recursive Meta-Cognitive CCT</span> - Unified system spanning all three domains</p>
+        </div>
+      </div>
+      
+      <div id="element-info" style="display: none;">
+        <div class="info-section">
+          <h3 id="element-title">Element Name</h3>
+          <div class="tag-list" id="element-domains">
+            <!-- Tags will be inserted here -->
+          </div>
+          <p id="element-description">Description will appear here.</p>
+        </div>
+        
+        <div class="info-section">
+          <h3>Isomorphic Properties</h3>
+          <ul id="element-properties">
+            <!-- Properties will be inserted here -->
+          </ul>
+        </div>
+        
+        <div class="info-section">
+          <h3>Integration Applications</h3>
+          <ul id="element-applications">
+            <!-- Applications will be inserted here -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="implementation-timeline">
+    <h2>Implementation Progression</h2>
+    <p>Cross-domain integration advances through five progressive stages of development and implementation:</p>
+    
+    <div class="timeline">
+      <div class="timeline-marker">
+        <div class="marker-dot" style="background-color: #dc3545;">1</div>
+        <div class="marker-label">Domain Modeling</div>
+        <div class="marker-description">Establish formal models of each domain's core structures and operating principles.</div>
+      </div>
+      
+      <div class="timeline-marker">
+        <div class="marker-dot" style="background-color: #fd7e14;">2</div>
+        <div class="marker-label">Structure Mapping</div>
+        <div class="marker-description">Identify and formalize structural correspondences between domain-specific implementations.</div>
+      </div>
+      
+      <div class="timeline-marker">
+        <div class="marker-dot" style="background-color: #28a745;">3</div>
+        <div class="marker-label">Isomorphism Identification</div>
+        <div class="marker-description">Validate functional equivalence between cross-domain structures through formal verification.</div>
+      </div>
+      
+      <div class="timeline-marker">
+        <div class="marker-dot" style="background-color: #007bff;">4</div>
+        <div class="marker-label">Integration Development</div>
+        <div class="marker-description">Develop unified frameworks that leverage cross-domain isomorphisms for enhanced functionality.</div>
+      </div>
+      
+      <div class="timeline-marker">
+        <div class="marker-dot" style="background-color: #6f42c1;">5</div>
+        <div class="marker-label">Meta-System Emergence</div>
+        <div class="marker-description">Enable recursive self-improvement through meta-cognitive observation and optimization loops.</div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get tooltip element
+      const tooltip = document.getElementById('tooltip');
+      
+      // Get info panel elements
+      const defaultInfo = document.getElementById('default-info');
+      const elementInfo = document.getElementById('element-info');
+      const elementTitle = document.getElementById('element-title');
+      const elementDescription = document.getElementById('element-description');
+      const elementDomains = document.getElementById('element-domains');
+      const elementProperties = document.getElementById('element-properties');
+      const elementApplications = document.getElementById('element-applications');
+      
+      // Get all interactive SVG elements
+      const interactiveElements = document.querySelectorAll('.svg-interactive');
+      
+      // Element information database
+      const elementData = {
+        'computational-domain': {
+          title: 'Computational Domain',
+          domains: ['Computational'],
+          properties: [
+            'Algorithmic processing through executable code structures',
+            'Efficient information handling through data structures',
+            'Runtime optimization through memoization and caching'
+          ],
+          applications: [
+            'Programming languages and compilers',
+            'Data structure design and optimization',
+            'Algorithm development for specific problem domains'
+          ]
+        },
+        'cognitive-domain': {
+          title: 'Cognitive Domain',
+          domains: ['Cognitive'],
+          properties: [
+            'Neural processing through biological networks',
+            'Pattern recognition and categorization',
+            'Learning through experience and feedback'
+          ],
+          applications: [
+            'Cognitive psychology and neuroscience models',
+            'Learning theory and educational design',
+            'Cognitive architecture development'
+          ]
+        },
+        'representational-domain': {
+          title: 'Representational Domain',
+          domains: ['Representational'],
+          properties: [
+            'Symbolic encoding of knowledge',
+            'Structured relationships between concepts',
+            'Hierarchical organization of information'
+          ],
+          applications: [
+            'Knowledge representation systems',
+            'Ontology development',
+            'Data serialization formats'
+          ]
+        },
+        'thoughtnode': {
+          title: 'ThoughtNode Structure',
+          domains: ['Computational'],
+          properties: [
+            'Self-referential structure that can contain other nodes',
+            'Hierarchical organization of computational concepts',
+            'Identity tracking through unique identifiers'
+          ],
+          applications: [
+            'Graph-based computation models',
+            'Hierarchical neural networks',
+            'Knowledge graph implementations'
+          ]
+        },
+        'memocache': {
+          title: 'Memoization Cache',
+          domains: ['Computational'],
+          properties: [
+            'Storage of previously computed results',
+            'Optimization through redundancy elimination',
+            'Time-space tradeoff implementation'
+          ],
+          applications: [
+            'Dynamic programming optimizations',
+            'Web caching systems',
+            'Machine learning model inference acceleration'
+          ]
+        },
+        'working-memory': {
+          title: 'Working Memory',
+          domains: ['Cognitive'],
+          properties: [
+            'Temporary information storage for active processing',
+            'Limited capacity requiring efficient allocation',
+            'Interface between perception and long-term memory'
+          ],
+          applications: [
+            'Cognitive load theory in education',
+            'User interface design principles',
+            'Short-term information retention systems'
+          ]
+        },
+        'longterm-memory': {
+          title: 'Long-term Memory',
+          domains: ['Cognitive'],
+          properties: [
+            'Persistent storage of information',
+            'Structured organization of knowledge',
+            'Associative retrieval mechanisms'
+          ],
+          applications: [
+            'Knowledge base systems',
+            'Persistent database design',
+            'Learning systems with experience accumulation'
+          ]
+        },
+        'metacognition': {
+          title: 'Meta-cognition',
+          domains: ['Cognitive'],
+          properties: [
+            'Self-awareness of cognitive processes',
+            'Regulation and monitoring of thinking',
+            'Higher-order reasoning about reasoning'
+          ],
+          applications: [
+            'Self-improving AI systems',
+            'Reflective learning frameworks',
+            'Executive function modeling'
+          ]
+        },
+        'anchor': {
+          title: 'YAML Anchor',
+          domains: ['Representational'],
+          properties: [
+            'Named definition of reusable content',
+            'Memory-efficient representation',
+            'Structure separation from usage'
+          ],
+          applications: [
+            'Configuration management',
+            'Template systems',
+            'Documentation generation'
+          ]
+        },
+        'reference': {
+          title: 'YAML Reference',
+          domains: ['Representational'],
+          properties: [
+            'Pointer to previously defined content',
+            'DRY (Don\'t Repeat Yourself) implementation',
+            'Relationship establishment between concepts'
+          ],
+          applications: [
+            'Cross-referencing systems',
+            'Hyperlink implementations',
+            'Knowledge graph connections'
+          ]
+        },
+        'integration-center': {
+          title: 'Integration Zone',
+          domains: ['Computational', 'Cognitive', 'Representational'],
+          properties: [
+            'Convergence of multiple domain structures',
+            'Emergent properties through domain synthesis',
+            'Multi-dimensional mapping of isomorphisms'
+          ],
+          applications: [
+            'Cross-disciplinary research frameworks',
+            'Meta-cognitive computational systems',
+            'Knowledge representation that embeds computation'
+          ]
+        },
+        'memory-cache': {
+          title: 'Memory-Cache Isomorphism',
+          domains: ['Computational', 'Cognitive'],
+          properties: [
+            'Parallels between biological memory and computational caching',
+            'Optimization through pattern recognition',
+            'Structured retrieval mechanisms'
+          ],
+          applications: [
+            'Neuromorphic computing',
+            'Cognitive architecture design',
+            'Memory management systems'
+          ]
+        },
+        'pointer-reference': {
+          title: 'Pointer-Reference Isomorphism',
+          domains: ['Computational', 'Representational'],
+          properties: [
+            'Directed relationships between entities',
+            'Indirect access to information',
+            'Graph-like connection structures'
+          ],
+          applications: [
+            'Knowledge graphs with computational properties',
+            'Executable documentation systems',
+            'Self-modifying code structures'
+          ]
+        },
+        'chunking-anchors': {
+          title: 'Chunking-Anchors Isomorphism',
+          domains: ['Cognitive', 'Representational'],
+          properties: [
+            'Consolidation of information into reusable units',
+            'Pattern recognition for efficiency',
+            'Hierarchical organization of knowledge'
+          ],
+          applications: [
+            'Cognitive-inspired knowledge representation',
+            'Information architecture design',
+            'Educational content structuring'
+          ]
+        },
+        'point-a': {
+          title: 'Neural-Inspired Algorithms',
+          domains: ['Computational', 'Cognitive'],
+          properties: [
+            'Computational structures mimicking neural organization',
+            'Learning mechanisms inspired by brain plasticity',
+            'Parallel processing architectures'
+          ],
+          applications: [
+            'Artificial neural networks',
+            'Neuromorphic computing systems',
+            'Cognitive computing frameworks'
+          ]
+        },
+        'point-b': {
+          title: 'Executable Knowledge Graphs',
+          domains: ['Computational', 'Representational'],
+          properties: [
+            'Knowledge structures with embedded computation',
+            'Self-modifying representations',
+            'Runtime-evaluable semantic networks'
+          ],
+          applications: [
+            'Smart contracts and blockchain systems',
+            'Semantic web with computational capabilities',
+            'Self-documenting code frameworks'
+          ]
+        },
+        'point-c': {
+          title: 'Cognitive YAML Processing',
+          domains: ['Cognitive', 'Representational'],
+          properties: [
+            'Knowledge representation inspired by cognitive chunking',
+            'Attention-weighted information structures',
+            'Context-sensitive reference resolution'
+          ],
+          applications: [
+            'Human-intuitive configuration systems',
+            'Cognitive-aligned documentation formats',
+            'Natural knowledge organization systems'
+          ]
+        },
+        'point-d': {
+          title: 'Recursive Meta-Cognitive CCT',
+          domains: ['Computational', 'Cognitive', 'Representational'],
+          properties: [
+            'Fully integrated cross-domain system',
+            'Self-improving through recursive observation',
+            'Multi-level abstraction with isomorphic mapping'
+          ],
+          applications: [
+            'Advanced artificial general intelligence frameworks',
+            'Self-evolving knowledge systems',
+            'Cognitive architecture with embedded representation and computation'
+          ]
+        },
+        'recursive-iso': {
+          title: 'Recursive Self-Reference',
+          domains: ['Isomorphism'],
+          properties: [
+            'Self-referential structures across all domains',
+            'Creation of "strange loops" enabling meta-processing',
+            'Basis for meta-cognitive capabilities'
+          ],
+          applications: [
+            'Reflective programming paradigms',
+            'Self-improving systems',
+            'Meta-cognitive frameworks'
+          ]
+        },
+        'compression-iso': {
+          title: 'Compression/Chunking',
+          domains: ['Isomorphism'],
+          properties: [
+            'Pattern identification and consolidation',
+            'Memory optimization through reference',
+            'Hierarchy formation through abstraction'
+          ],
+          applications: [
+            'Knowledge compression algorithms',
+            'Cognitive architecture optimization',
+            'Information structure design'
+          ]
+        },
+        'meta-iso': {
+          title: 'Meta-Observational Capacity',
+          domains: ['Isomorphism'],
+          properties: [
+            'Ability to observe one\'s own processes',
+            'Higher-order thinking about thinking',
+            'Self-modification potential'
+          ],
+          applications: [
+            'Self-improving AI systems',
+            'Reflective learning frameworks',
+            'Meta-cognitive enhancement tools'
+          ]
+        },
+        'meta-loop': {
+          title: 'Meta-Cognitive Observation Loop',
+          domains: ['Meta-System'],
+          properties: [
+            'Overarching system self-awareness',
+            'Continuous monitoring and optimization',
+            'Integration of all domain observations'
+          ],
+          applications: [
+            'Unified cognitive architectures',
+            'Self-evolving knowledge systems',
+            'Recursive improvement frameworks'
+          ]
+        }
+      };
+      
+      // Function to show tooltip
+      function showTooltip(event, info) {
+        tooltip.textContent = info;
+        tooltip.style.display = 'block';
+        updateTooltipPosition(event);
+      }
+      
+      // Function to update tooltip position
+      function updateTooltipPosition(event) {
+        tooltip.style.left = (event.pageX + 10) + 'px';
+        tooltip.style.top = (event.pageY + 10) + 'px';
+      }
+      
+      // Function to hide tooltip
+      function hideTooltip() {
+        tooltip.style.display = 'none';
+      }
+      
+      // Function to show element information in panel
+      function showElementInfo(element) {
+        const id = element.id;
+        const data = elementData[id];
+        
+        if (!data) return;
+        
+        // Update info panel
+        elementTitle.textContent = data.title;
+        elementDescription.textContent = element.getAttribute('data-info');
+        
+        // Clear previous domains
+        elementDomains.innerHTML = '';
+        
+        // Add domain tags
+        data.domains.forEach(domain => {
+          const tag = document.createElement('span');
+          tag.className = 'tag';
+          tag.textContent = domain;
+          elementDomains.appendChild(tag);
+        });
+        
+        // Clear previous properties
+        elementProperties.innerHTML = '';
+        
+        // Add properties
+        data.properties.forEach(property => {
+          const li = document.createElement('li');
+          li.textContent = property;
+          elementProperties.appendChild(li);
+        });
+        
+        // Clear previous applications
+        elementApplications.innerHTML = '';
+        
+        // Add applications
+        data.applications.forEach(application => {
+          const li = document.createElement('li');
+          li.textContent = application;
+          elementApplications.appendChild(li);
+        });
+        
+        // Show element info, hide default
+        defaultInfo.style.display = 'none';
+        elementInfo.style.display = 'block';
+      }
+      
+      // Function to reset to default info
+      function showDefaultInfo() {
+        defaultInfo.style.display = 'block';
+        elementInfo.style.display = 'none';
+      }
+      
+      // Add event listeners to interactive elements
+      interactiveElements.forEach(element => {
+        const info = element.getAttribute('data-info');
+        
+        // Mouse enter - show tooltip
+        element.addEventListener('mouseenter', (e) => {
+          if (info) showTooltip(e, info);
+        });
+        
+        // Mouse move - update tooltip position
+        element.addEventListener('mousemove', (e) => {
+          if (tooltip.style.display === 'block') {
+            updateTooltipPosition(e);
+          }
+        });
+        
+        // Mouse leave - hide tooltip
+        element.addEventListener('mouseleave', () => {
+          hideTooltip();
+        });
+        
+        // Click - show detailed info in panel
+        element.addEventListener('click', () => {
+          showElementInfo(element);
+        });
+      });
+      
+      // Add event listeners to timeline markers
+      const timelineMarkers = document.querySelectorAll('.marker-dot');
+      timelineMarkers.forEach(marker => {
+        marker.addEventListener('click', function() {
+          // Toggle the description visibility
+          const description = this.parentElement.querySelector('.marker-description');
+          const allDescriptions = document.querySelectorAll('.marker-description');
+          
+          // Hide all descriptions first
+          allDescriptions.forEach(desc => {
+            desc.style.display = 'none';
+          });
+          
+          // Show this description
+          description.style.display = 'block';
+        });
+      });
+      
+      // Add click handler to reset to default view when clicking empty SVG areas
+      document.getElementById('integration-svg').addEventListener('click', (e) => {
+        // If clicked directly on SVG (not on an interactive element)
+        if (e.target.id === 'integration-svg' || e.target.tagName === 'rect' && e.target.width === '900') {
+          showDefaultInfo();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
