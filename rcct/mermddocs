@@ -1,0 +1,63 @@
+graph TD
+    %% Main Domain Nodes
+    CompDomain[Computational Domain] 
+    CogDomain[Cognitive Domain]
+    RepDomain[Representational Domain]
+    
+    %% Integration Core
+    Integration((Cross-Domain<br/>Integration))
+    
+    %% Domain-Specific Elements
+    CompDomain --> ThoughtNode["ThoughtNode struct"]
+    CompDomain --> MemoCache["Memoization Cache"]
+    CompDomain --> RecFunc["Recursive Functions"]
+    
+    CogDomain --> WorkMem["Working Memory"]
+    CogDomain --> MetaCog["Meta-cognition"]
+    CogDomain --> Pattern["Pattern Recognition"]
+    
+    RepDomain --> Anchors["YAML Anchors (&)"]
+    RepDomain --> Aliases["YAML Aliases (*)"]
+    RepDomain --> Nesting["Hierarchical Nesting"]
+    
+    %% Isomorphic Relationships
+    Recursive[Recursive Self-Reference]
+    Compression[Compression/Chunking]
+    MetaObs[Meta-Observational Capacity]
+    
+    %% Computational isomorphisms
+    ThoughtNode -.-> Recursive
+    MemoCache -.-> Compression
+    RecFunc -.-> MetaObs
+    
+    %% Cognitive isomorphisms
+    MetaCog -.-> Recursive
+    WorkMem -.-> Compression
+    Pattern -.-> MetaObs
+    
+    %% Representational isomorphisms
+    Aliases -.-> Recursive
+    Anchors -.-> Compression
+    Nesting -.-> MetaObs
+    
+    %% Integration Connections
+    Recursive --> Integration
+    Compression --> Integration
+    MetaObs --> Integration
+    
+    %% Integration Points
+    Integration --> PointA{A: Neural-Inspired<br/>Algorithms}
+    Integration --> PointB{B: Executable<br/>Knowledge Graphs}
+    Integration --> PointC{C: Cognitive YAML<br/>Processing}
+    Integration --> PointD{D: Recursive<br/>Meta-Cognitive CCT}
+    
+    %% Styling
+    classDef domain fill:#f9f9f9,stroke:#333,stroke-width:1px
+    classDef integration fill:#ffd700,stroke:#333,stroke-width:1px
+    classDef isomorphism fill:#f5f5f5,stroke:#6610f2,stroke-width:1px,stroke-dasharray: 5 5
+    classDef point fill:white,stroke:#fd7e14,stroke-width:2px
+    
+    class CompDomain,CogDomain,RepDomain domain
+    class Integration integration
+    class Recursive,Compression,MetaObs isomorphism
+    class PointA,PointB,PointC,PointD point
