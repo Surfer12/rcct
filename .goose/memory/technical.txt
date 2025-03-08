@@ -12,3 +12,25 @@ The application follows a layered architecture:
 - Controller: VisualizationController
 - View: HTML templates with JavaScript for interactive visualization
 
+# react visualization project-structure
+The React implementation of the RCCT visualizer has the following components:
+
+1. App (root component) - Manages application state and composition
+2. ThoughtTree - Displays hierarchical thought structure
+3. VisualizationPanel - Renders visualizations using D3.js
+4. DetailsPanel - Shows detailed information about selected nodes
+
+Key technologies:
+- React with TypeScript for UI components
+- D3.js for interactive visualizations
+- React-Syntax-Highlighter for code display
+
+Project structure:
+- src/
+  - components/ (React components)
+  - data/ (Sample data for the visualization)
+  - types/ (TypeScript type definitions)
+  - App.tsx (Main application component)
+  - App.css (Styling)
+  - index.tsx (Entry point)
+

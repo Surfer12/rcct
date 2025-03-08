@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Spring Boot backend
+  rcct-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      # Add any other environment variables your application needs
+    networks:
+      - rcct-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # React frontend
+  rcct-frontend:
+    build:
+      context: ./rcct-react
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - rcct-backend
+    networks:
+      - rcct-network
+    environment:
+      - REACT_APP_API_URL=http://rcct-backend:8080
+
+networks:
+  rcct-network:
+    driver: bridge
