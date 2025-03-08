@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.0'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.0'
+    implementation 'org.projectreactor:reactor-core:3.4.0'
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    testImplementation 'io.projectreactor:reactor-test:3.4.0'
+}
+
+application {
+    mainClass = 'com.rcct.RCCTApplication'
+}
+
+test {
+    useJUnitPlatform()
+} 
