@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa" />
+  <text x="400" y="30" font-family="Arial" font-size="22" text-anchor="middle" fill="#343a40">CCT Model Evaluation Process</text>
+  
+  <!-- Process Flow -->
+  <!-- Start Node -->
+  <rect x="350" y="70" width="100" height="40" rx="20" ry="20" fill="#007bff" stroke="#343a40" stroke-width="2" />
+  <text x="400" y="95" font-family="Arial" font-size="14" text-anchor="middle" fill="#fff">Start</text>
+  
+  <!-- Evaluate ThoughtNode -->
+  <rect x="300" y="140" width="200" height="60" rx="5" ry="5" fill="#fff" stroke="#343a40" stroke-width="2" />
+  <text x="400" y="175" font-family="Arial" font-size="16" text-anchor="middle" fill="#343a40">Evaluate ThoughtNode</text>
+  
+  <!-- Cache Check -->
+  <polygon points="400,230 450,270 400,310 350,270" fill="#fff" stroke="#343a40" stroke-width="2" />
+  <text x="400" y="275" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">In Cache?</text>
+  
+  <!-- Return Cached Value -->
+  <rect x="530" y="240" width="170" height="60" rx="5" ry="5" fill="#28a745" stroke="#343a40" stroke-width="2" />
+  <text x="615" y="275" font-family="Arial" font-size="14" text-anchor="middle" fill="#fff">Return Cached Result</text>
+  
+  <!-- Process Current Node -->
+  <rect x="300" y="340" width="200" height="60" rx="5" ry="5" fill="#fff" stroke="#343a40" stroke-width="2" />
+  <text x="400" y="375" font-family="Arial" font-size="16" text-anchor="middle" fill="#343a40">Process Current Node</text>
+  
+  <!-- Recursive Process -->
+  <rect x="100" y="340" width="160" height="60" rx="5" ry="5" fill="#6610f2" stroke="#343a40" stroke-width="2" />
+  <text x="180" y="375" font-family="Arial" font-size="14" text-anchor="middle" fill="#fff">Process Sub-Thoughts</text>
+  
+  <!-- Alias Process -->
+  <rect x="540" y="340" width="160" height="60" rx="5" ry="5" fill="#dc3545" stroke="#343a40" stroke-width="2" />
+  <text x="620" y="375" font-family="Arial" font-size="14" text-anchor="middle" fill="#fff">Process Alias Node</text>
+  
+  <!-- Combine Results -->
+  <rect x="300" y="430" width="200" height="60" rx="5" ry="5" fill="#fff" stroke="#343a40" stroke-width="2" />
+  <text x="400" y="465" font-family="Arial" font-size="16" text-anchor="middle" fill="#343a40">Combine Results</text>
+  
+  <!-- Cache Result -->
+  <rect x="300" y="520" width="200" height="40" rx="5" ry="5" fill="#6610f2" stroke="#343a40" stroke-width="2" />
+  <text x="400" y="545" font-family="Arial" font-size="14" text-anchor="middle" fill="#fff">Store in Memoization Cache</text>
+  
+  <!-- Connection Arrows -->
+  <!-- Start to Evaluate -->
+  <path d="M 400 110 L 400 140" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="400,140 395,130 405,130" fill="#343a40" />
+  
+  <!-- Evaluate to Cache Check -->
+  <path d="M 400 200 L 400 230" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="400,230 395,220 405,220" fill="#343a40" />
+  
+  <!-- Cache Check to Return Cached -->
+  <path d="M 450 270 L 530 270" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="530,270 520,265 520,275" fill="#343a40" />
+  <text x="490" y="260" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">Yes</text>
+  
+  <!-- Cache Check to Process Current -->
+  <path d="M 400 310 L 400 340" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="400,340 395,330 405,330" fill="#343a40" />
+  <text x="420" y="325" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">No</text>
+  
+  <!-- Process Current to Sub-Thoughts -->
+  <path d="M 300 370 L 260 370" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="260,370 270,365 270,375" fill="#343a40" />
+  
+  <!-- Sub-Thoughts to Self (Recursion) -->
+  <path d="M 180 340 C 180 320 180 300 250 230 C 280 200 320 200 350 230 L 370 250" stroke="#6610f2" stroke-width="2" fill="none" stroke-dasharray="5,5" />
+  <polygon points="370,250 358,248 365,240" fill="#6610f2" />
+  <text x="250" y="210" font-family="Arial" font-size="14" text-anchor="middle" fill="#6610f2">Recursive Call</text>
+  
+  <!-- Process Current to Alias -->
+  <path d="M 500 370 L 540 370" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="540,370 530,365 530,375" fill="#343a40" />
+  
+  <!-- Alias to Self (Recursion) -->
+  <path d="M 620 340 C 620 320 620 300 550 230 C 520 200 480 200 450 230 L 430 250" stroke="#dc3545" stroke-width="2" fill="none" stroke-dasharray="5,5" />
+  <polygon points="430,250 442,248 435,240" fill="#dc3545" />
+  <text x="550" y="210" font-family="Arial" font-size="14" text-anchor="middle" fill="#dc3545">Recursive Call</text>
+  
+  <!-- Process Current to Combine -->
+  <path d="M 400 400 L 400 430" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="400,430 395,420 405,420" fill="#343a40" />
+  
+  <!-- Combine to Cache -->
+  <path d="M 400 490 L 400 520" stroke="#343a40" stroke-width="2" fill="none" />
+  <polygon points="400,520 395,510 405,510" fill="#343a40" />
+  
+  <!-- Cache to Return (via side path) -->
+  <path d="M 300 540 C 150 540 150 400 150 300 C 150 250 150 200 300 200" stroke="#6610f2" stroke-width="2" fill="none" stroke-dasharray="5,5" />
+  <polygon points="300,200 290,195 290,205" fill="#6610f2" />
+  <text x="180" y="500" font-family="Arial" font-size="14" text-anchor="middle" fill="#6610f2">Future Lookups</text>
+</svg>

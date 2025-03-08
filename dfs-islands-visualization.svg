@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa" />
+  <text x="400" y="30" font-family="Arial" font-size="22" text-anchor="middle" fill="#343a40">Island DFS Algorithm: Recursive Exploration</text>
+  
+  <!-- Grid Representation -->
+  <rect x="50" y="70" width="350" height="350" fill="#e9ecef" stroke="#343a40" stroke-width="2" />
+  
+  <!-- Grid Cells -->
+  <!-- Row 1 -->
+  <rect x="50" y="70" width="70" height="70" fill="#28a745" stroke="#343a40" stroke-width="1" />
+  <text x="85" y="110" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <rect x="120" y="70" width="70" height="70" fill="#28a745" stroke="#343a40" stroke-width="1" />
+  <text x="155" y="110" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <rect x="190" y="70" width="70" height="70" fill="#28a745" stroke="#343a40" stroke-width="1" />
+  <text x="225" y="110" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <rect x="260" y="70" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="295" y="110" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="330" y="70" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="365" y="110" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <!-- Row 2 -->
+  <rect x="50" y="140" width="70" height="70" fill="#28a745" stroke="#343a40" stroke-width="1" />
+  <text x="85" y="180" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <rect x="120" y="140" width="70" height="70" fill="#28a745" stroke="#343a40" stroke-width="1" />
+  <text x="155" y="180" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <rect x="190" y="140" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="225" y="180" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="260" y="140" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="295" y="180" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="330" y="140" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="365" y="180" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <!-- Row 3 -->
+  <rect x="50" y="210" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="85" y="250" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="120" y="210" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="155" y="250" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="190" y="210" width="70" height="70" fill="#dc3545" stroke="#343a40" stroke-width="1" />
+  <text x="225" y="250" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <rect x="260" y="210" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="295" y="250" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="330" y="210" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="365" y="250" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <!-- Row 4 -->
+  <rect x="50" y="280" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="85" y="320" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="120" y="280" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="155" y="320" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="190" y="280" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="225" y="320" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="260" y="280" width="70" height="70" fill="#6610f2" stroke="#343a40" stroke-width="1" />
+  <text x="295" y="320" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <rect x="330" y="280" width="70" height="70" fill="#6610f2" stroke="#343a40" stroke-width="1" />
+  <text x="365" y="320" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">1</text>
+  
+  <!-- Row 5 -->
+  <rect x="50" y="350" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="85" y="390" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="120" y="350" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="155" y="390" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="190" y="350" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="225" y="390" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="260" y="350" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="295" y="390" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <rect x="330" y="350" width="70" height="70" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="365" y="390" font-family="Arial" font-size="16" text-anchor="middle" fill="#fff">0</text>
+  
+  <!-- DFS Algorithm Visualization -->
+  <rect x="450" y="70" width="300" height="350" rx="10" ry="10" fill="#fff" stroke="#343a40" stroke-width="2" />
+  <text x="600" y="95" font-family="Arial" font-size="18" text-anchor="middle" fill="#343a40">DFS Exploration</text>
+  
+  <!-- DFS Steps -->
+  <rect x="470" y="110" width="260" height="40" rx="5" ry="5" fill="#e9ecef" stroke="#343a40" stroke-width="1" />
+  <text x="600" y="135" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">1. Check all cells sequentially</text>
+  
+  <rect x="470" y="160" width="260" height="40" rx="5" ry="5" fill="#e9ecef" stroke="#343a40" stroke-width="1" />
+  <text x="600" y="185" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">2. Find a land cell ('1')</text>
+  
+  <rect x="470" y="210" width="260" height="40" rx="5" ry="5" fill="#e9ecef" stroke="#343a40" stroke-width="1" />
+  <text x="600" y="235" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">3. Increment island count</text>
+  
+  <rect x="470" y="260" width="260" height="110" rx="5" ry="5" fill="#e9ecef" stroke="#343a40" stroke-width="1" />
+  <text x="600" y="285" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">4. Recursively explore neighbors</text>
+  <text x="600" y="310" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">   (up, down, left, right)</text>
+  <text x="600" y="335" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">5. Mark visited cells as '0'</text>
+  <text x="600" y="360" font-family="Arial" font-size="14" text-anchor="middle" fill="#343a40">6. Return when no more land cells</text>
+  
+  <!-- Recursive Exploration Visualization -->
+  <!-- Recursive Arrows -->
+  <path d="M 120 95 C 135 80 155 80 170 95" stroke="#28a745" stroke-width="2" fill="none" stroke-dasharray="3,3" />
+  <polygon points="170,95 165,85 175,85" fill="#28a745" />
+  
+  <path d="M 155 95 C 170 80 190 80 205 95" stroke="#28a745" stroke-width="2" fill="none" stroke-dasharray="3,3" />
+  <polygon points="205,95 200,85 210,85" fill="#28a745" />
+  
+  <path d="M 85 110 C 85 125 85 145 85 165" stroke="#28a745" stroke-width="2" fill="none" stroke-dasharray="3,3" />
+  <polygon points="85,165 80,155 90,155" fill="#28a745" />
+  
+  <path d="M 155 110 C 155 125 155 145 155 165" stroke="#28a745" stroke-width="2" fill="none" stroke-dasharray="3,3" />
+  <polygon points="155,165 150,155 160,155" fill="#28a745" />
+  
+  <path d="M 225 235 C 240 235 260 235 275 280" stroke="#dc3545" stroke-width="2" fill="none" stroke-dasharray="3,3" />
+  <polygon points="275,280 265,270 275,270" fill="#dc3545" />
+  
+  <path d="M 295 315 C 310 315 330 315 345 300" stroke="#6610f2" stroke-width="2" fill="none" stroke-dasharray="3,3" />
+  <polygon points="345,300 335,295 345,305" fill="#6610f2" />
+  
+  <!-- Legend -->
+  <rect x="50" y="450" width="700" height="120" rx="10" ry="10" fill="#fff" stroke="#343a40" stroke-width="2" />
+  <text x="400" y="475" font-family="Arial" font-size="18" text-anchor="middle" fill="#343a40">Legend</text>
+  
+  <rect x="80" y="490" width="30" height="30" fill="#007bff" stroke="#343a40" stroke-width="1" />
+  <text x="130" y="510" font-family="Arial" font-size="14" text-anchor="left" fill="#343a40">Water ('0')</text>
+  
+  <rect x="80" y="530" width="30" height="30" fill="#28a745" stroke="#343a40" stroke-width="1" />
+  <text x="130" y="550" font-family="Arial" font-size="14" text-anchor="left" fill="#343a40">Island #1 (First discovered island)</text>
+  
+  <rect x="300" y="490" width="30" height="30" fill="#dc3545" stroke="#343a40" stroke-width="1" />
+  <text x="350" y="510" font-family="Arial" font-size="14" text-anchor="left" fill="#343a40">Island #2 (Second discovered island)</text>
+  
+  <rect x="300" y="530" width="30" height="30" fill="#6610f2" stroke="#343a40" stroke-width="1" />
+  <text x="350" y="550" font-family="Arial" font-size="14" text-anchor="left" fill="#343a40">Island #3 (Third discovered island)</text>
+  
+  <path d="M 550 510 C 580 490 610 490 640 510" stroke="#343a40" stroke-width="2" fill="none" stroke-dasharray="3,3" />
+  <polygon points="640,510 630,500 640,505" fill="#343a40" />
+  <text x="650" y="510" font-family="Arial" font-size="14" text-anchor="left" fill="#343a40">DFS Recursive Exploration</text>
+</svg>
