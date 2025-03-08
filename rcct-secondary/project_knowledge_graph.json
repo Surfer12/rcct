@@ -1,0 +1,96 @@
+{
+  "entities": [
+    {
+      "id": "project_root",
+      "type": "directory",
+      "name": "rcct"
+    },
+    {
+      "id": "app_dir",
+      "type": "directory",
+      "name": "app"
+    },
+    {
+      "id": "docs_dir",
+      "type": "directory",
+      "name": "docs"
+    },
+    {
+      "id": "src_dir",
+      "type": "directory",
+      "name": "src"
+    },
+    {
+      "id": "main_dir",
+      "type": "directory",
+      "name": "main"
+    },
+    {
+      "id": "test_dir",
+      "type": "directory",
+      "name": "test"
+    },
+    {
+      "id": "java_dir",
+      "type": "directory",
+      "name": "java"
+    },
+    {
+      "id": "resources_dir",
+      "type": "directory",
+      "name": "resources"
+    },
+    {
+      "id": "yaml_dir",
+      "type": "directory",
+      "name": "yaml"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "project_root",
+      "target": "app_dir",
+      "type": "contains"
+    },
+    {
+      "source": "project_root",
+      "target": "docs_dir",
+      "type": "contains"
+    },
+    {
+      "source": "app_dir",
+      "target": "src_dir",
+      "type": "contains"
+    },
+    {
+      "source": "src_dir",
+      "target": "main_dir",
+      "type": "contains"
+    },
+    {
+      "source": "src_dir",
+      "target": "test_dir",
+      "type": "contains"
+    },
+    {
+      "source": "main_dir",
+      "target": "java_dir",
+      "type": "contains"
+    },
+    {
+      "source": "main_dir",
+      "target": "resources_dir",
+      "type": "contains"
+    },
+    {
+      "source": "docs_dir",
+      "target": "yaml_dir",
+      "type": "contains"
+    }
+  ],
+  "metadata": {
+    "description": "Structure of the RCCT project showing application and documentation components",
+    "created": "2025-03-08 02:13:38 -0800",
+    "empty_files": true
+  }
+}

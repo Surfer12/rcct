@@ -1,0 +1,13 @@
+# structure app docs rcct
+Project structure:
+- app/
+  - src/
+    - main/
+      - java/
+      - resources/
+    - test/
+- docs/
+  - yaml/
+
+The project appears to have a Java-based application structure with separate documentation (possibly in YAML format). Both directories exist but currently do not contain any actual files.
+

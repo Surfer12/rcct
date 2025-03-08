@@ -1,0 +1,14 @@
+# frameworks libraries architecture
+The RCCT (Recursive Chain-of-Thought) implementation uses:
+1. Spring Boot 2.7.0 with WebFlux for reactive programming
+2. Thymeleaf for HTML templating
+3. Reactor Core for reactive programming patterns
+4. Jackson for YAML parsing and serialization
+5. JUnit Jupiter for testing
+
+The application follows a layered architecture:
+- Model: ThoughtNode, CCTModel
+- Service: ThoughtProcessingService
+- Controller: VisualizationController
+- View: HTML templates with JavaScript for interactive visualization
+

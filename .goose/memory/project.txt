@@ -1,0 +1,48 @@
+# project-structure java spring-boot visualization
+The RCCT (Recursive Chain-of-Thought) project is a Java/Spring Boot application that implements a recursive thought processing model. Key components include:
+
+1. ThoughtNode - Core data structure representing a thought with sub-thoughts, supporting hierarchy and aliasing
+2. CCTModel - Model for evaluating thought nodes recursively with memoization
+3. ThoughtProcessingService - Service layer for processing thoughts
+4. VisualizationController - Web controller for the interactive visualization interface
+
+The project uses a visualization-heavy approach with interactive diagrams and explorers. The interactive-integration-explorer.html provides a web interface for exploring the CCT model.
+
+# concepts integration meta-cognition memoization
+The project implements several key concepts:
+
+1. Recursive Self-Reference: Ability of thought structures to reference themselves (ThoughtNode.aliasNode)
+2. Memoization/Caching: Optimization through storing computed results (CCTModel.memoizationCache)
+3. Meta-Observational Framework: System's ability to reason about its own reasoning processes
+
+The structured_analysis documents describe a tripartite integration between:
+- Computational implementation (Java/Mojo structures)
+- Cognitive modeling (neural processes)
+- Knowledge representation (YAML structures)
+
+Key integration points identified in the documentation relate to how these domains can converge.
+
+# file-structure build java gradle
+Project file structure:
+- root directory: /Users/ryanoates/Desktop/rcct/
+- Main application code in app/src/main/java/
+  - com.rcct package: Core implementation
+  - com.rcct.model: Data models (ThoughtNode, CCTModel)
+  - com.rcct.service: Services (ThoughtProcessingService)
+  - com.rcct.web: Web controllers (VisualizationController)
+- Visualization resources in app/src/main/resources/templates/
+- Documentation and analysis in rcct/ directory
+- Secondary implementation in rcct-secondary/
+
+The project uses Gradle for build management with Spring Boot 2.7.0.
+Java version: 21
+
+# visualization svg web-interface
+Key visualization files:
+1. interactive-integration-explorer.html - Main web interface for exploring the CCT model
+2. cross-domain-integration-visualization.svg - Visualization of domain integration concepts
+3. recursive-cct-model.svg - Visualization of the recursive model structure
+4. yaml-anchors-aliases.svg - Visualization of YAML representation concepts
+
+The visualizations are central to the project, illustrating complex concepts like recursive thought structures, cross-domain integration, and meta-cognitive processes.
+
