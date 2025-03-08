@@ -60,3 +60,35 @@ Docker deployment for RCCT application includes:
 
 The system is designed for easy deployment with a single "docker-compose up" command.
 
+# implementation annotation configuration visualization
+The RCCT implementation includes these technical components:
+
+1. Data Models:
+   - @Entity annotations for JPA persistence
+   - @Data, @NoArgsConstructor, @AllArgsConstructor Lombok annotations for reduced boilerplate
+   - Entity relationships using @OneToMany annotation with cascading
+   - ID generation with @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+2. Service Layer:
+   - @Service and @Transactional annotations for business logic
+   - Methods for creating, processing, and evaluating thoughts
+   - Recursive processing implementation for thought nodes
+
+3. Controller Layer:
+   - @Controller with @RequestMapping for routing
+   - @GetMapping and @PostMapping for RESTful endpoints
+   - @ResponseBody for JSON responses
+   - Thymeleaf integration for HTML templates
+
+4. Visualization:
+   - Interactive web interface with SVG visualization
+   - Dynamic tree structure representation
+   - JavaScript for client-side interactions
+   - CSS for dark-mode UI design
+
+5. Configuration:
+   - Spring Boot application properties for different environments
+   - H2 in-memory database configuration
+   - Docker-specific configurations
+   - Actuator endpoints for health monitoring
+

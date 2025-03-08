@@ -46,3 +46,63 @@ Key visualization files:
 
 The visualizations are central to the project, illustrating complex concepts like recursive thought structures, cross-domain integration, and meta-cognitive processes.
 
+# project-structure architecture technologies docker
+The RCCT (Recursive Chain-of-Thought) project implements a Java/Spring Boot application for recursive thought processing with the following key components:
+
+1. Entity Models:
+   - ThoughtNode: Represents individual thoughts with properties including content, type, depth, parentId, and metadata
+   - CCTModel: Contains collections of ThoughtNodes and manages the overall thought model
+
+2. Architecture:
+   - Spring Boot 3.2.3 backend with WebFlux reactive programming
+   - Jakarta Persistence (JPA) for data storage and retrieval 
+   - Thymeleaf templating for server-side rendering
+   - H2 in-memory database for development
+   
+3. Key Technologies:
+   - Java 17
+   - Spring Boot with Spring Data JPA
+   - Lombok for reducing boilerplate code
+   - Thymeleaf for HTML templates
+   - Docker for containerization
+   
+4. Project Structure:
+   - Main application in com.anthropic.rcct package
+   - Entity models in com.anthropic.rcct.model
+   - Services in com.anthropic.rcct.service
+   - Controllers in com.anthropic.rcct.controller
+   - HTML templates in src/main/resources/templates
+   
+5. Docker Integration:
+   - Multi-stage build process
+   - Docker Compose for orchestration
+   - Container health checks
+   - Environment-specific configuration
+
+# concepts goals vision design
+The RCCT project has these core conceptual goals:
+
+1. Recursive Thought Processing:
+   - Implement a computational model of recursive thought chains
+   - Support meta-cognitive reflection (thoughts about thoughts)
+   - Enable deep hierarchical thought structures
+   - Provide memoization for efficient processing
+
+2. Cross-Domain Integration:
+   - Bridge computational implementation with cognitive modeling
+   - Connect formal data structures with knowledge representation
+   - Support interoperability between different reasoning systems
+   - Enable translation between different thought representation formats
+
+3. Interactive Visualization:
+   - Provide intuitive visual exploration of thought structures
+   - Support real-time manipulation of thought hierarchies
+   - Offer multiple visualization perspectives (overview, recursive, cross-domain)
+   - Facilitate understanding of complex thought relationships
+
+4. Knowledge Representation:
+   - Formalize thought structures in multiple formats (Java objects, YAML, code)
+   - Support aliasing and self-reference in thought structures
+   - Enable metadata tagging for enhanced processing
+   - Provide clean API for thought manipulation
+
