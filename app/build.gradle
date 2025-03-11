@@ -8,8 +8,8 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'java'
-    id 'org.springframework.boot' version '2.7.0'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 repositories {
@@ -29,7 +29,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.0'
+    
+    // Lombok for reducing boilerplate code
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    
+    // H2 database for development
+    runtimeOnly 'com.h2database:h2'
     
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test:3.4.0'
@@ -44,7 +53,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'rcct.App'
+    mainClass = 'com.rcct.anthropic.rcct.RCCTApplication'
 }
 
 tasks.named('test') {
