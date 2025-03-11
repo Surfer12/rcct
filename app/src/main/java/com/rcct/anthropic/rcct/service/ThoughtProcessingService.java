@@ -1,7 +1,7 @@
-package com.anthropic.rcct.service;
+package com.rcct.anthropic.rcct.service;
 
-import com.anthropic.rcct.model.CCTModel;
-import com.anthropic.rcct.model.ThoughtNode;
+import com.rcct.anthropic.rcct.model.CCTModel;
+import com.rcct.anthropic.rcct.model.ThoughtNode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.anthropic.rcct.model;
+package com.rcct.anthropic.rcct.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
