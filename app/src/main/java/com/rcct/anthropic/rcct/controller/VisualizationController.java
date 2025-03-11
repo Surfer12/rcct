@@ -1,9 +1,9 @@
-package com.anthropic.rcct.controller;
+package com.rcct.anthropic.rcct.controller;
 
 import java.util.List;
-import com.anthropic.rcct.model.CCTModel;
-import com.anthropic.rcct.model.ThoughtNode;
-import com.anthropic.rcct.service.ThoughtProcessingService;
+import com.rcct.anthropic.rcct.model.CCTModel;
+import com.rcct.anthropic.rcct.model.ThoughtNode;
+import com.rcct.anthropic.rcct.service.ThoughtProcessingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
